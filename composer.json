@@ -1,0 +1,24 @@
+{
+  "name": "psychob/eos-api",
+  "description": "PHP EOS Wrapper",
+  "type": "library",
+  "require": {
+    "php": "^7.2",
+    "guzzlehttp/guzzle": "^6.3",
+    "psr/log": "^1.1",
+    "nabil1337/case-helper": "^0.1.0"
+  },
+  "license": "MPL-2.0",
+  "authors": [
+    {
+      "name": "Andrzej Budzanowski",
+      "email": "kontakt@andrzej.budzanowski.pl"
+    }
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "PsychoB\\EOS\\": "./src"
+    }
+  }
+}
