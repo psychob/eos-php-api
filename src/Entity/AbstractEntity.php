@@ -3,6 +3,7 @@
 namespace PsychoB\EOS\Entity;
 
 use CaseHelper\CaseHelperFactory;
+use PsychoB\EOS\Exception\InvalidGetterException;
 use PsychoB\EOS\Exception\KeyNotFoundException;
 
 class AbstractEntity

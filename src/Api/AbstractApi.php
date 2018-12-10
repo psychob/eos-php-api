@@ -14,19 +14,73 @@ abstract class AbstractApi
     /** @var LoggerInterface */
     protected $logger;
 
+    /** @var string */
+    protected $uri;
+
     /**
      * AbstractApi constructor.
+     *
+     * @param string $uri
      * @param Client $client
      * @param LoggerInterface $logger
      */
-    public function __construct(Client $client, LoggerInterface $logger)
+    public function __construct(string $uri, Client $client, LoggerInterface $logger)
     {
+        $this->uri = $uri;
         $this->client = $client;
         $this->logger = $logger;
     }
 
-    protected function request(string $uri, ?array $params, string $class, bool $removeNulls = true): AbstractEntity
-    {
+    /**
+     * @param string $uri
+     * @param array|null $params
+     * @param string|null $class
+     * @param bool $removeNulls
+     * @return AbstractEntity|array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    protected function request(
+        string $uri,
+        ?array $params = null,
+        ?string $class = null,
+        bool $removeNulls = true
+    ) {
+        $options = [
+            'allow_redirects' => false,
+            'headers' => [
+                'Accept' => 'application/json',
+            ],
+        ];
+
+        if (!empty($params)) {
+            $ret = $params;
+            if ($removeNulls) {
+                $ret = [];
+
+                foreach ($params as $key => $value) {
+                    if ($value !== null) {
+                        $ret[$key] = $value;
+                    }
+                }
+            }
+
+            if (!empty($ret)) {
+                $options['form_params'] = $ret;
+            }
+        }
+
+        $rq = $this->client->request('POST', $this->uri . $uri, $options);
+
+        $response = $this->client->send($rq);
+
+        $body = $response->getBody()->getContents();
+        $body = json_decode($body, true);
+
+        if ($class) {
+            $body = new $class($body);
+        }
+
+        return $body;
     }
 
     protected function dateToString(?\DateTime $time): ?string
@@ -34,5 +88,7 @@ abstract class AbstractApi
         if ($time === null) {
             return $time;
         }
+
+        return $time->format('Y-m-d H:i');
     }
 }
