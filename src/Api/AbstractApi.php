@@ -69,6 +69,11 @@ abstract class AbstractApi
             }
         }
 
+        $this->logger->debug(sprintf('EOS POST %s%s', $this->uri, $uri), [
+            'base' => $this->uri,
+            'uri' => $uri,
+            'options' => $options,
+        ]);
         $rq = $this->client->request('POST', $this->uri . $uri, $options);
 
         $response = $this->client->send($rq);
