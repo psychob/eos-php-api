@@ -20,5 +20,8 @@
     "psr-4": {
       "PsychoB\\EOS\\": "./src"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

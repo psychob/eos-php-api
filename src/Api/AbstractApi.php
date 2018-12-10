@@ -4,6 +4,7 @@ namespace PsychoB\EOS\Api;
 
 use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
+use PsychoB\EOS\Entity\AbstractEntity;
 
 abstract class AbstractApi
 {
@@ -22,5 +23,16 @@ abstract class AbstractApi
     {
         $this->client = $client;
         $this->logger = $logger;
+    }
+
+    protected function request(string $uri, ?array $params, string $class, bool $removeNulls = true): AbstractEntity
+    {
+    }
+
+    protected function dateToString(?\DateTime $time): ?string
+    {
+        if ($time === null) {
+            return $time;
+        }
     }
 }
