@@ -7,7 +7,7 @@
     "ext-json": "*",
     "guzzlehttp/guzzle": "^6.3",
     "nabil1337/case-helper": "^0.1.0",
-    "psr/log": "^1.1"
+    "psr/log": "~1.0"
   },
   "license": "MPL-2.0",
   "authors": [
