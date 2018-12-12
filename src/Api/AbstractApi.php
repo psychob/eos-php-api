@@ -3,8 +3,10 @@
 namespace PsychoB\EOS\Api;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use PsychoB\EOS\Entity\AbstractEntity;
+use PsychoB\EOS\Exception\RpcException;
 
 abstract class AbstractApi
 {
@@ -37,7 +39,6 @@ abstract class AbstractApi
      * @param string|null $class
      * @param bool $removeNulls
      * @return AbstractEntity|array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     protected function request(
         string $uri,
@@ -69,14 +70,18 @@ abstract class AbstractApi
             }
         }
 
-        $this->logger->debug(sprintf('EOS POST %s%s', $this->uri, $uri), [
-            'base' => $this->uri,
-            'uri' => $uri,
-            'options' => $options,
-        ]);
-        $rq = $this->client->request('POST', $this->uri . $uri, $options);
+        try {
+            $this->logger->debug(sprintf('EOS POST %s%s', $this->uri, $uri), [
+                'base' => $this->uri,
+                'uri' => $uri,
+                'options' => $options,
+            ]);
+            $rq = $this->client->request('POST', $this->uri . $uri, $options);
 
-        $response = $this->client->send($rq);
+            $response = $this->client->send($rq);
+        } catch (GuzzleException $e) {
+            throw new RpcException('Bad request', $e);
+        }
 
         $body = $response->getBody()->getContents();
         $body = json_decode($body, true);
