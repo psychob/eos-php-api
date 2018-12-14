@@ -35,14 +35,14 @@ abstract class AbstractApi
 
     /**
      * @param string $uri
-     * @param array|null $params
+     * @param string|array|null $params
      * @param string|null $class
      * @param bool $removeNulls
      * @return AbstractEntity|array
      */
     protected function request(
         string $uri,
-        ?array $params = null,
+        $params = null,
         ?string $class = null,
         bool $removeNulls = true
     ) {
