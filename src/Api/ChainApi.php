@@ -142,16 +142,16 @@ class ChainApi extends AbstractApi
     }
 
     public function getCurrencyBalance(
-        ?string $account = null,
-        ?string $code = null,
+        string $account,
+        string $code = 'eosio.token',
         ?string $symbol = null
-    ): AccountBalance {
+    ): array {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->request('/v1/chain/get_currency_balance', [
             'code' => $code,
             'account' => $account,
             'symbol' => $symbol,
-        ], AccountBalance::class);
+        ]);
     }
 
     public function abiJsonToBin(?string $code = null, ?string $action = null, ?string $json = null): Binary
