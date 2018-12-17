@@ -5,6 +5,7 @@ namespace PsychoB\EOS\Api;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use PsychoB\EOS\Entity\AbstractEntity;
 use PsychoB\EOS\Exception\RpcException;
 
@@ -23,14 +24,33 @@ abstract class AbstractApi
      * AbstractApi constructor.
      *
      * @param string $uri
+     * @param string|null $user
+     * @param string|null $pass
      * @param Client $client
      * @param LoggerInterface $logger
      */
-    public function __construct(string $uri, Client $client, LoggerInterface $logger)
-    {
+    public function __construct(
+        string $uri,
+        ?string $user = null,
+        ?string $pass = null,
+        ?Client $client = null,
+        ?LoggerInterface $logger = null
+    ) {
+        if (!$client) {
+            $options = [];
+
+            if ($user) {
+                $options['auth'] = [
+                    $user, $pass
+                ];
+            }
+
+            $client = new Client($options);
+        }
+
         $this->uri = $uri;
         $this->client = $client;
-        $this->logger = $logger;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     /**
