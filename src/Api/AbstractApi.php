@@ -55,7 +55,7 @@ abstract class AbstractApi
 
         if (!empty($params)) {
             $ret = $params;
-            if ($removeNulls) {
+            if ($removeNulls && is_array($params)) {
                 $ret = [];
 
                 foreach ($params as $key => $value) {
@@ -66,7 +66,7 @@ abstract class AbstractApi
             }
 
             if (!empty($ret)) {
-                $options['form_params'] = $ret;
+                $options['json'] = $ret;
             }
         }
 
@@ -84,7 +84,11 @@ abstract class AbstractApi
         }
 
         $body = $response->getBody()->getContents();
-        $body = json_decode($body, true);
+        try {
+            $body = json_decode($body, true, 512, JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR);
+        } catch (\Exception $exception) {
+            throw new RpcException("Can't decode message", $exception);
+        }
 
         if ($class) {
             $body = new $class($body);
