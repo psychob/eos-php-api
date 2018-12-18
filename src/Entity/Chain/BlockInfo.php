@@ -29,6 +29,9 @@ class BlockInfo extends AbstractEntity
         return \DateTime::createFromFormat('!Y-m-d\\TH:i:s.u', $this->data['timestamp']);
     }
 
+    /**
+     * @return SimpleTransaction[]|DetailedTransaction[]
+     */
     public function getTransactions(): array
     {
         if (!$this->transactionsCache) {
