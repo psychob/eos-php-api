@@ -17,4 +17,14 @@ use PsychoB\EOS\Entity\AbstractEntity;
  */
 class InnerTrxTransaction extends AbstractEntity
 {
+    public function getActions(): array
+    {
+        $actions = [];
+
+        foreach ($this->data['actions'] as $action) {
+            $actions[] = new Action($action);
+        }
+
+        return $actions;
+    }
 }
