@@ -5,7 +5,7 @@ namespace PsychoB\EOS\Api;
 use PsychoB\EOS\Entity\History\ActionsInfo;
 use PsychoB\EOS\Entity\History\ControlledAccounts;
 use PsychoB\EOS\Entity\History\KeyAccounts;
-use PsychoB\EOS\Entity\History\Transaction;
+use PsychoB\EOS\Entity\Transaction\GetTransaction;
 
 class HistoryApi extends AbstractApi
 {
@@ -19,12 +19,13 @@ class HistoryApi extends AbstractApi
         ], ActionsInfo::class);
     }
 
-    public function getTransaction(string $id): Transaction
+    public function getTransaction(string $id, ?string $blockNumHint = null)
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->request('/v1/history/get_transaction', [
             'id' => $id,
-        ], Transaction::class);
+            'block_num_hint' => $blockNumHint,
+        ], GetTransaction::class);
     }
 
     public function getKeyAccounts(string $publicKey): KeyAccounts

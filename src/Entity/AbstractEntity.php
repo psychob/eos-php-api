@@ -49,4 +49,9 @@ class AbstractEntity
 
         return $helper->toSnakeCase($name);
     }
+
+    protected static function toDateTime(string $value): \DateTime
+    {
+        return \DateTime::createFromFormat('!Y-m-d\\TH:i:s.u', $value);
+    }
 }

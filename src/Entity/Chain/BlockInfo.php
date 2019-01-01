@@ -26,7 +26,7 @@ class BlockInfo extends AbstractEntity
 
     public function getTimestamp(): \DateTime
     {
-        return \DateTime::createFromFormat('!Y-m-d\\TH:i:s.u', $this->data['timestamp']);
+        return $this->toDateTime($this->data['timestamp']);
     }
 
     /**
