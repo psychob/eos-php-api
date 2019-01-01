@@ -19,7 +19,7 @@ class HistoryApi extends AbstractApi
         ], ActionsInfo::class);
     }
 
-    public function getTransaction(string $id, ?string $blockNumHint = null)
+    public function getTransaction(string $id, ?string $blockNumHint = null): GetTransaction
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->request('/v1/history/get_transaction', [
