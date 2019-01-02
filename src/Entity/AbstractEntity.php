@@ -20,7 +20,7 @@ class AbstractEntity
         $this->data = $data;
     }
 
-    public function __get($name)
+    public function __call($name, $arguments)
     {
         if (strpos($name, 'get') !== 0) {
             throw new InvalidGetterException($name);
