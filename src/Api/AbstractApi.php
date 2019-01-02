@@ -7,6 +7,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use PsychoB\EOS\Entity\AbstractEntity;
+use PsychoB\EOS\Exception\JsonException;
 use PsychoB\EOS\Exception\RpcException;
 
 abstract class AbstractApi
@@ -103,7 +104,10 @@ abstract class AbstractApi
 
         $body = $response->getBody()->getContents();
         try {
-            $body = json_decode($body, true, 512, JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR);
+            $body = json_decode($body, true, 512, JSON_BIGINT_AS_STRING);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new JsonException(json_last_error_msg(), json_last_error());
+            }
         } catch (\Exception $exception) {
             throw new RpcException("Can't decode message", $exception);
         }
