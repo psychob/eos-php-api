@@ -2,7 +2,7 @@
 
 namespace PsychoB\EOS\Api;
 
-use GuzzleHttp\Client;
+use Graze\GuzzleHttp\JsonRpc\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -45,7 +45,7 @@ abstract class AbstractApi
                 ];
             }
 
-            $client = new Client($options);
+            $client = Client::factory($uri, $options);
         }
 
         $this->uri = $uri;

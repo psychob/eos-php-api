@@ -5,7 +5,7 @@
   "require": {
     "php": "^7.2",
     "ext-json": "*",
-    "guzzlehttp/guzzle": "^6.3",
+    "graze/guzzle-jsonrpc": "^3.2",
     "nabil1337/case-helper": "^0.1.0",
     "psr/log": "^1.0"
   },
