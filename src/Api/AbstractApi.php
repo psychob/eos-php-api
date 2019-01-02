@@ -96,9 +96,7 @@ abstract class AbstractApi
                 'uri' => $uri,
                 'options' => $options,
             ]);
-            $rq = $this->client->request('POST', $this->uri . $uri, $options);
-
-            $response = $this->client->send($rq);
+            $response = $this->client->request('POST', $this->uri . $uri, $options);
         } catch (GuzzleException $e) {
             throw new RpcException('Bad request', $e);
         }
