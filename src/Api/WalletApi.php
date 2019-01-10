@@ -2,6 +2,8 @@
 
 namespace PsychoB\EOS\Api;
 
+use PsychoB\EOS\Exception\RpcException;
+
 class WalletApi extends AbstractApi
 {
     public function create(string $fileName)
@@ -26,7 +28,17 @@ class WalletApi extends AbstractApi
 
     public function unlock(string $fileName, string $password)
     {
-        return $this->request('/v1/wallet/unlock', [$fileName, $password]);
+        try {
+            return $this->request('/v1/wallet/unlock', [$fileName, $password]);
+        } catch (RpcException $e) {
+            $message = json_decode($e->getPrevious()->getResponse()->getBody()->__toString(), true);
+
+            if (strpos(strtolower($message['error']['what']), 'already unlocked') !== false) {
+                return true;
+            }
+
+            throw $e;
+        }
     }
 
     public function importKey(string $fileName, string $privateKey)
