@@ -174,7 +174,7 @@ class ChainApi extends AbstractApi
         ], Json::class);
     }
 
-    public function getRequiredKeys(string $transaction, array $availableKeys): RequiredKeys
+    public function getRequiredKeys(array $transaction, array $availableKeys): RequiredKeys
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->request('/v1/chain/get_required_keys', [
@@ -237,7 +237,7 @@ class ChainApi extends AbstractApi
         ?array $signatures = null,
         ?string $compression = null,
         ?string $ctxFreeData = null,
-        ?string $packedTrx = null
+        ?array $packedTrx = null
     ): PushTransaction {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->request('/v1/chain/push_transaction', [

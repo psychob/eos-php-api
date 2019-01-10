@@ -24,9 +24,9 @@ class WalletApi extends AbstractApi
         return $this->request('/v1/wallet/lock_all');
     }
 
-    public function unlock(string $fileName)
+    public function unlock(string $fileName, string $password)
     {
-        return $this->request('/v1/wallet/unlock', $fileName);
+        return $this->request('/v1/wallet/unlock', [$fileName, $password]);
     }
 
     public function importKey(string $fileName, string $privateKey)
@@ -54,7 +54,7 @@ class WalletApi extends AbstractApi
         return $this->request('/v1/wallet/set_timeout');
     }
 
-    public function signTransaction($txn, $keys, $id)
+    public function signTransaction(array $txn, array $keys, $id = '')
     {
         return $this->request('/v1/wallet/sign_transaction', [
             'txn' => $txn,
