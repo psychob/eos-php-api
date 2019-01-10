@@ -154,7 +154,7 @@ class ChainApi extends AbstractApi
         ]);
     }
 
-    public function abiJsonToBin(?string $code = null, ?string $action = null, ?string $json = null): Binary
+    public function abiJsonToBin(?string $code = null, ?string $action = null, array $json = null): Binary
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->request('/v1/chain/abi_json_to_bin', [
