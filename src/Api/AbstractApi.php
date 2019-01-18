@@ -102,7 +102,7 @@ abstract class AbstractApi
             throw new RpcException('Bad request', $e);
         }
 
-        $body = $response->getBody()->getContents();
+        $body = $response->getBody()->__toString();
         try {
             $body = json_decode($body, true, 512, JSON_BIGINT_AS_STRING);
             if (json_last_error() !== JSON_ERROR_NONE) {

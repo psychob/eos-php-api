@@ -244,7 +244,7 @@ class ChainApi extends AbstractApi
             'signatures' => $signatures,
             'compression' => $compression,
             'packed_context_free_data' => $ctxFreeData,
-            'packed_trx' => $packedTrx,
+            'transaction' => $packedTrx,
         ], PushTransaction::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace PsychoB\EOS\Api;
 
+use PsychoB\EOS\Entity\AbstractEntity;
 use PsychoB\EOS\Exception\RpcException;
 
 class WalletApi extends AbstractApi
@@ -69,10 +70,10 @@ class WalletApi extends AbstractApi
     public function signTransaction(array $txn, array $keys, $id = '')
     {
         return $this->request('/v1/wallet/sign_transaction', [
-            'txn' => $txn,
-            'keys' => $keys,
-            'id' => $id,
-        ]);
+            /*'txn' => */$txn,
+            /*'keys' => */$keys,
+            /*'id' => */$id,
+        ], AbstractEntity::class);
     }
 
     public function setDir()
