@@ -2,7 +2,7 @@
 
 namespace PsychoB\EOS\Api;
 
-use PsychoB\EOS\Entity\AbstractEntity;
+use PsychoB\EOS\Entity\Wallet\SignTransaction;
 use PsychoB\EOS\Exception\RpcException;
 
 class WalletApi extends AbstractApi
@@ -57,7 +57,7 @@ class WalletApi extends AbstractApi
         return $this->request('/v1/wallet/list_keys');
     }
 
-    public function getPublicKeys()
+    public function getPublicKeys(): array
     {
         return $this->request('/v1/wallet/get_public_keys');
     }
@@ -67,13 +67,17 @@ class WalletApi extends AbstractApi
         return $this->request('/v1/wallet/set_timeout');
     }
 
-    public function signTransaction(array $txn, array $keys, $id = '')
+    public function signTransaction(array $txn, array $keys, $id = ''): SignTransaction
     {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->request('/v1/wallet/sign_transaction', [
-            /*'txn' => */$txn,
-            /*'keys' => */$keys,
-            /*'id' => */$id,
-        ], AbstractEntity::class);
+            /*'txn' => */
+            $txn,
+            /*'keys' => */
+            $keys,
+            /*'id' => */
+            $id,
+        ], SignTransaction::class);
     }
 
     public function setDir()
